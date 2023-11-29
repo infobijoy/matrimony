@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $fullname = $_POST['fullname'];
     $gender = $_POST['gender'];
+    $looking_for = $_POST['looking_for'];
     $address = $_POST['address'];
     $age = $_POST['age'];
     $height = $_POST['height'];
@@ -71,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $signup_time = date("d-m-Y h:i:sa");
     $about = $_POST['about'];
     // Insert data into the database	
-    $sql = "INSERT INTO users (email, phone, fullname, gender, address, age, height, education, occupation, income, caste, sub_caste, moon_sing, tribe, password, profile_photo, signup_time, about) VALUES ('$email', '$phone', '$fullname', '$gender', '$address', '$age', '$height', '$education', '$occupation', '$income', '$caste', '$sub_caste', '$moon_sing', '$tribe', '$password', '$targetFile', '$signup_time', '$about' )";
+    $sql = "INSERT INTO users (email, phone, fullname, gender, looking_for, address, age, height, education, occupation, income, caste, sub_caste, moon_sing, tribe, password, profile_photo, signup_time, about) VALUES ('$email', '$phone', '$fullname', '$gender', '$looking_for', '$address', '$age', '$height', '$education', '$occupation', '$income', '$caste', '$sub_caste', '$moon_sing', '$tribe', '$password', '$targetFile', '$signup_time', '$about' )";
 
     if ($conn->query($sql) === TRUE) {
         // Automatically log in after successful signup
@@ -92,6 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label>Phone: <input class="form-control" type="text" name="phone" required></label><br>
         <label>Full Name: <input class="form-control" type="text" name="fullname" required></label><br>
         <label>Gender: <input class="" type="radio" name="gender" value="1"> Male <input class="" type="radio" name="gender" value="0">Female</label><br>
+        <label>Looking For : <input class="" type="radio" name="looking_for" value="1"> Marriage <input class="" type="radio" name="looking_for" value="0">Relationship</label><br>
         <label>address: <input class="form-control" type="text" name="address" required></label><br>
         <label>age: <input class="form-control" type="text" name="age" required></label><br>
         <label>height: <input class="form-control" type="text" name="height" required></label><br>
@@ -107,8 +109,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- ... other form fields ... -->
         <label>Password: <input class="form-control" type="password" name="password" required></label><br>
         <label>Confirm Password: <input class="form-control" type="password" name="confirm_password" required></label><br>
-        <input class="btn btn-success" type="submit" value="Sign Up">
+        <div class="col-12 justify-content-center d-flex">
+            <input class="btn btn-success justify-content-center" type="submit" value="Sign Up">
+        </div>
+        
     </form>
-    <a href="log_in.php">Log In</a>
+    <div class="col-12 justify-content-center d-flex p-2">
+        <a class="btn btn-warning" href="log_in.php">Log In</a>
+    </div>
+    
 <?php
 require 'includes/footer.php'; ?>
