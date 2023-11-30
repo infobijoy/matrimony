@@ -23,6 +23,16 @@ include 'includes/nav.php';
 ?>
 <div class="container mt-2">
 <?php
+
+$sqlbutton = "SELECT * FROM request WHERE user_id = $user_id";
+$resultbutton = $conn->query($sqlbutton);
+if ($resultbutton->num_rows > 0) {
+    $button = $resultbutton->fetch_assoc();
+    $resultbuttonrequest_id = $button['request_id'];
+}
+while ($rowbt = $resultbutton->fetch_assoc()){
+    
+}
 // SQL query to select data from your table
 $sql = "SELECT * FROM users WHERE gender = $user_gender and looking_for = $user_looking_for and paid = 1 and verified = 1 ORDER BY id DESC";
 $result = $conn->query($sql);
@@ -41,18 +51,39 @@ while ($row = $result->fetch_assoc()) {
     <input type="hidden" name="approval" value="0">
     <button name="submitForm' . $row["id"] . '" type="submit" class="mt-2 mb-2 rounded-3 btn btn-warning">Request For ID : <b class="text-success">' . $row["id"] . '</b></button>
     </form>
-    </div> ';
+    <div class=" d-none alert alert-warning" role="alert">
+    A request has been sent! <a href="#" class="alert-link">Wait for approval</a>
+    </div>
+    <div class=" d-none alert alert-danger" role="alert">
+    Request rejected! <a href="#" class="alert-link">Why reject</a>
+    </div>
+    </div>
+    <div class=" d-none alert alert-success" role="alert">
+    Request approved! <a href="#" class="alert-link">View information</a>
+    </div>
+    <div class=" d-none alert alert-secondary" role="alert">
+    Request limit exceeded. <a href="#" class="alert-link">Application for new request</a>
+    </div>
+    <div class=" d-none alert alert-secondary" role="alert">
+    Request limit exceeded. <a href="#" class="alert-link">Wait for approval</a>
+    </div>
+    <div class=" d-none alert alert-secondary" role="alert">
+    Request limit exceeded. <a href="#" class="alert-link">Your application is rejected</a>
+    </div>';
     // Check if the form is submitted
     if (isset($_POST['submitForm' . $row["id"] . ''])) {
         // Retrieve form data
         $user_id = $_POST['user_id'];
         $request_id = $_POST['request_id'];
         $approval	 = $_POST['approval'];
-
         $insertSql = "INSERT INTO request (user_id, request_id, approval) VALUES ('$user_id', '$request_id', '$approval')";
         
         if ($conn->query($insertSql) === true) {
-            echo "Request Sent Successfully";
+            echo '
+            <div class="alert alert-success" role="alert">
+            Request Sent Successfully
+            </div>
+            ';
         } else {
             echo "Error: " . $insertSql . "<br>" . $conn->error;
         }
